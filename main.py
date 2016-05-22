@@ -12,8 +12,9 @@ def load_data():
 			# print(row[23])
 			# data.extend(row[1])
 			# data.append(row)
-			print(row[3])
-			#print(numerize(row[3]))
+			#print(row[3])
+			temp = row[3]
+			print(numerize(row[3]))
 #end of load_data
 
 def clean_data():
@@ -26,6 +27,7 @@ def clean_data():
 	#school_name = [sub_list[0] for sub_list in data]
 
 def numerize(str_list):
+	print(str_list)
 	set_vals = set(str_list)
 	print(set_vals)
 	# set_vals contains the A or B options
