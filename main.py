@@ -8,27 +8,14 @@ def clean_data():
 	data = pandas.read_csv('student/student-mat.csv', sep=';')
 	# making school information redundant
 	data.ix[:, 0] = 0.1
-	'''
-	for i in range(0,395):
-		#binarizing gender: Male = 0, Female = 1
-		if data.ix[i,1]=='M':
-			data.ix[i,1] = 0
-		else:
-			data.ix[i,1] = 1
-		#binarising address: Rural = 0, Urban = 1
-		if data.ix[i, 3] == 'R':
-			data.ix[i, 3] = 0
-		else:
-			data.ix[i, 3] = 1
-		#binarizing famsize: Less than 3 = 0, Greater than 3 = 1
-		if data.ix[i, 4] == 'LE3':
-			data.ix[i, 4] = 0
-		else:
-			data.ix[i, 4] = 1
-	'''
-	# calling numerize
-	data.ix[:,1] = numerize(data.ix[:,1])
-	print(data)
+	numerization_indices = {'1', '3', '4', '5', '8', '9', '10', '11', '15', '16', '17', '18', '19', '20', '21', '22'}
+	normalization_indices = {'2', '29', '30', '31', '32'}
+	#running numerization loop here
+	for num_idx in numerization_indices:
+		data.ix[:,int(num_idx)] = numerize(data.ix[:,int(num_idx)])
+	#running normalization loop here
+	for norm_idx in normalization_indices:
+		data.ix[:, int(norm_idx)] = normalize(data.ix[:,int(norm_idx)])
 	if debug:
 		print(data)
 
@@ -36,7 +23,7 @@ def numerize(str_list):
 	set_vals = set(str_list)
 	if debug:
 		print(set_vals)
-	# set_vals contains the A or B options
+	# set_vals contains the 'A' or 'B' options
 	dict_map = {}
 	numerized_list = []
 	#building the index map here
@@ -59,7 +46,5 @@ def normalize(numeric_list):
 	#Using sample statistics here
 	numeric_list[:] = [((x-mean)/std_dev) for x in numeric_list]
 	return numeric_list
-
-
 
 clean_data()
