@@ -21,16 +21,7 @@ def clean_data():
 		data.ix[:, norm_idx] = normalize(data.ix[:,norm_idx])
 	# Partition function splits the data up into test and training
 	# TODO: Cross validation?
-	#train_x, train_y, test_x, test_y = partition_data(data)
 	partition_data(data)
-	'''
-	if debug:
-		#print(data)
-		print('Training x is: \n', train_x)
-		print('Training y is: \n', train_y)
-		print('Testing x is: \n', test_x)
-		print('Testing y is: \n', test_y)
-	'''
 
 def numerize(str_list):
 	set_vals = set(str_list)
@@ -78,19 +69,13 @@ def partition_data(data):
 	col_no = data.columns.get_loc(col_name)
 	# Training lot
 	train_x = data.ix[:train_partition_size,:]
-	train_x = train_x.drop(col_name, 1)
 	train_y = train_x.ix[:, col_no]
-		#Testing lot
+	train_x = train_x.drop(col_name, 1)
+	# Testing lot
 	test_x = data.ix[train_partition_size+1:,:]
-	test_x = test_x.drop(col_name, 1)
 	test_y = test_x.ix[:, col_no]
-	#if debug:
-	#	print('Partitioning training set at row no:', train_partition_size)
-	#	print(train_x)
-	#	print(test_x)
-	#   print(train_y)
-	#   print(test_y)
-	#return train_x, train_y, test_x, test_y
+	test_x = test_x.drop(col_name, 1)
+
 
 def print_wtf():
 	print('Training x is: \n', train_x)
@@ -99,3 +84,4 @@ def print_wtf():
 	print('Testing y is: \n', test_y)
 
 clean_data()
+print_wtf()
