@@ -1,7 +1,8 @@
 import csv, statistics, numpy as np
 import pandas, random
 
-debug = False
+global debug
+debug = True
 global train_x
 global train_y
 global test_x
@@ -65,7 +66,7 @@ def partition_data(data):
 	no_of_rows = len(data.index)
 	# randomly choose a partition size here
 	train_partition_size = random.randint((no_of_rows-1)/2, no_of_rows-2)
-	col_name = input('Please enter the column number of the feature you want to predict: ')
+	col_name = input('Please enter the column name of the feature you want to predict: ')
 	col_no = data.columns.get_loc(col_name)
 	# Training lot
 	train_x = data.ix[:train_partition_size,:]
@@ -76,12 +77,15 @@ def partition_data(data):
 	test_y = test_x.ix[:, col_no]
 	test_x = test_x.drop(col_name, 1)
 
-
-def print_wtf():
-	print('Training x is: \n', train_x)
-	print('Training y is: \n', train_y)
-	print('Testing x is: \n', test_x)
-	print('Testing y is: \n', test_y)
+def print_part():
+	global debug
+	if debug:
+		print('Training x is: \n', train_x)
+		print('Training y is: \n', train_y)
+		print('Testing x is: \n', test_x)
+		print('Testing y is: \n', test_y)
 
 clean_data()
-print_wtf()
+print_part()
+print("Type of train_x, train_y, test_x, test_y is: ", type(train_x), type(train_y), type(test_x), type(test_y))
+#TODO: build and SVM that separates y=1 from rest
